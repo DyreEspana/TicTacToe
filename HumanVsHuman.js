@@ -92,7 +92,6 @@ let grid = [["   ", "|", " 1 ", "|", " 2 ", "|", " 3 "],
 //********************* FUNCTION: DISPLAY MATCHFIELD **************************
 function displayGRID() {
     playersTurn = "Player" + whosTurn() + "\'s turn"
-    console.clear();
     let gridFromArrToStr0 = grid[0].join("");
     let gridFromArrToStr1 = grid[1].join("");
     let gridFromArrToStr2 = grid[2].join("");
@@ -100,6 +99,7 @@ function displayGRID() {
     let gridFromArrToStr4 = grid[4].join("");
     let gridFromArrToStr5 = grid[5].join("");
     let gridFromArrToStr6 = grid[6].join("");
+    console.clear();
     newLine();
     displayText(YOU_PLAY_HUMAN_VERSUS_HUMAN);
     newLine();
@@ -119,7 +119,6 @@ function displayGRID() {
 let isWin = false;
 //********************* FUNCTION: DRAW **************************
 function draw() {
-    while (countMoves === 9 && isWin === false) {
         let goodbyeLength = "                           ";
         let goodbye = "\n" +
         alignCenter(goodbyeLength) + " _____                     \n" +
@@ -129,8 +128,7 @@ function draw() {
         alignCenter(goodbyeLength) + "| |__| | | | (_| |\\ V  V / \n" +
         alignCenter(goodbyeLength) + "|_____/|_|  \\__,_| \\_/\\_/  \n";
         console.log(goodbye);
-        process.exit();
-    }  
+        //process.exit();
 }
 
 //********************* WINNING CONDITIONS **************************
@@ -183,6 +181,24 @@ function winningCondition(PLAYER1, PLAYER2) {
     }
 }
 
+//********************** FUNCTION: QUIT GAME **********************
+function quitGame(promptName) {
+    if (promptName === "QUIT") {
+        let goodbyeLength = "                                           ";
+        let goodbye = "\n" +
+            alignCenter(goodbyeLength) + "   _____                 _ _               \n" + 
+            alignCenter(goodbyeLength) + " / ____|               | | |               \n" +
+            alignCenter(goodbyeLength) + "| |  __  ___   ___   __| | |__  _   _  ___ \n" +
+            alignCenter(goodbyeLength) + "| | |_ |/ _ \ / _ \ / _` | '_ \| | | |/ _ \\n" +
+            alignCenter(goodbyeLength) + "| |__| | (_) | (_) | (_| | |_) | |_| |  __/\n" +
+            alignCenter(goodbyeLength) + " \_____|\___/ \___/ \__,_|_.__/ \__, |\___|\n" +
+            alignCenter(goodbyeLength) + "                                 __/ |     \n" +
+            alignCenter(goodbyeLength) + "                                |___/      \n" 
+        console.log(goodbye);
+        process.exit();
+    }
+}
+
 //*********************** DRAW MATCHFIELD ****************************
 //*********************** DRAW MATCHFIELD VARIABLE****************************
 //const WRONG_ENTRY = "Position already taken or non existent."; Can be deledet!
@@ -216,24 +232,6 @@ function drawMatchfield(input, Player) {
     } else if (input === "C3") {
         grid[6].splice(6, 1, Player);
         displayGRID();
-    }
-}
-
-//********************** FUNCTION: QUIT GAME **********************
-function quitGame(promptName) {
-    if (promptName === "QUIT") {
-        let goodbyeLength = "                                           ";
-        let goodbye = "\n" +
-            alignCenter(goodbyeLength) + "   _____                 _ _               \n" + 
-            alignCenter(goodbyeLength) + " / ____|               | | |               \n" +
-            alignCenter(goodbyeLength) + "| |  __  ___   ___   __| | |__  _   _  ___ \n" +
-            alignCenter(goodbyeLength) + "| | |_ |/ _ \ / _ \ / _` | '_ \| | | |/ _ \\n" +
-            alignCenter(goodbyeLength) + "| |__| | (_) | (_) | (_| | |_) | |_| |  __/\n" +
-            alignCenter(goodbyeLength) + " \_____|\___/ \___/ \__,_|_.__/ \__, |\___|\n" +
-            alignCenter(goodbyeLength) + "                                 __/ |     \n" +
-            alignCenter(goodbyeLength) + "                                |___/      \n" 
-        console.log(goodbye);
-        process.exit();
     }
 }
 
@@ -276,10 +274,14 @@ function humanVsHuman() {
         getUserInput();
         console.clear();
         drawMatchfield(userMovesMade[9], PLAYER2);
-        draw();
-        winningCondition(PLAYER1, PLAYER2);
+        if (countMoves === 9 && isWin === false) {
+            draw();
+        } else {
+            winningCondition(PLAYER1, PLAYER2);
+        }
     }
 }
+//humanVsHuman();
 
 //*************EXPORT****************
 module.exports = {

@@ -2,12 +2,13 @@
 TODO:   If quit is enter quit the game! presses exit
 */
 const prompt = require("prompt-sync")();
+const process = require ('process');
 const { humanVsHuman } = require("./humanVsHuman");
 const { randomAiVsRandomAi } = require("./randomAiVsRandomAi");
 const { humanVsRandomAi } = require("./humanVsRandomAi");
-const process = require ('process');
 
-//*********FUNCTION TO ALIGN CENTER IN TERMINAL***************
+//********************* FUNCTION: ALIGN TO CENTER *********************
+//formatting - text allign = Plese enter in let windoWidth your window sitze (character spacing)
 function alignCenter(varToAlignCenter) {
     let windoWidth = 160;
     let startPoint = (windoWidth - varToAlignCenter.length) / 2;
@@ -16,6 +17,13 @@ function alignCenter(varToAlignCenter) {
         arraySpaceAlineCenter.push(" ");
     }
     return arraySpaceAlineCenter.join("");
+}
+function displayText(text) {
+    console.log(alignCenter(text) + text);
+}
+//New line
+function newLine() {
+    console.log("\n");
 }
 
 let ticLength = "                                                             ";
@@ -43,19 +51,26 @@ function startGameMenu() {
     let buttonStart = "Please enter 1 to start the game.";
     let buttonRules = "Please enter 2 to see the rules.";
     let quit = "You can quit the game by enter quit.";
-    console.log("\n" + alignCenter(buttonStart) + buttonStart);
-    console.log("\n" + alignCenter(buttonRules) + buttonRules);
-    console.log("\n\n" + alignCenter(quit) + quit);
-    console.log("\n");
+    newLine();
+    displayText(buttonStart);
+    newLine();
+    displayText(buttonRules);
+    newLine();
+    newLine();
+    displayText(quit);
+    newLine();
     startOrRulesPrompt = prompt(alignCenter(yourChoice) + yourChoice).toLowerCase();
-    if (startOrRulesPrompt !== "1" && startOrRulesPrompt !== "2") {
+    while (startOrRulesPrompt !== "1" && startOrRulesPrompt !== "2") {
         console.clear();
         console.log(TicTacToe);
         let wrongStartInput = "Please enter just 1 for Start Game";
         let wrongRulesInput = "or enter 2 to get the Rules of the Game";
-        console.log("\n" + alignCenter(wrongStartInput) + wrongStartInput);
-        console.log("\n" + alignCenter(wrongRulesInput) + wrongRulesInput);
-        console.log("\n\n");
+        newLine();
+        displayText(wrongStartInput);
+        newLine();
+        displayText(wrongRulesInput);
+        newLine();
+        newLine();
         startOrRulesPrompt = prompt(alignCenter(yourChoice) + yourChoice).toLowerCase();
     }
     if (startOrRulesPrompt === "1") {
@@ -124,18 +139,18 @@ function startGameMenu() {
                 console.clear();
                 console.log(TicTacToe);
                 if (gameModePrompt === "1") {
-                    humanVsHuman;
-                    saveGameModeInput[0] = gameModePrompt;
+                    //humanVsHuman;
+                    //saveGameModeInput[0] = gameModePrompt;
                 } else if (gameModePrompt === "2") {
                     randomAiVsRandomAi;
-                    saveGameModeInput[0] = gameModePrompt;
+                    //saveGameModeInput[0] = gameModePrompt;
                 } else if (gameModePrompt === "3") {
                     humanVsRandomAi;
-                    saveGameModeInput[0] = gameModePrompt;
-                } else if (gameModePrompt === "4") {
+                    //saveGameModeInput[0] = gameModePrompt;
+                } /*else if (gameModePrompt === "4") {
                     //Usable for game mode functions
                     saveGameModeInput[0] = gameModePrompt;
-                } else {
+                }*/ else {
                     let wrongMenuInput1 = "Sorry i dont understand your input,";
                     let wrongMenuInput2 = "just enter the number 1-4 to select the Game Mode!";
                     console.log("\n" + alignCenter(wrongMenuInput1) + wrongMenuInput1);
@@ -155,4 +170,26 @@ function startGameMenu() {
 return saveGameModeInput;
 }
 
-startGameMenu();
+let getArrOfGameMenu = startGameMenu();
+let gameMode = getArrOfGameMenu[0];
+let isGameQuit = getArrOfGameMenu[1];
+
+if (isGameQuit === true) {
+    process.exit();
+}
+if (gameMode === "1") {
+    humanVsHuman();
+}
+if (gameMode === "2") {
+    randomAiVsRandomAi();
+}
+if (gameMode === "3") {
+    humanVsRandomAi();
+} /*if (gameMode === "4") {
+    //Usable for game mode functions
+}*/
+console.log(gameMode);
+console.log(isGameQuit);
+typeof(gameMode);
+typeof(humanVsHuman);
+let testPrompt = prompt("Thx");
