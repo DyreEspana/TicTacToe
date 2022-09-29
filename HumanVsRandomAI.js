@@ -214,7 +214,7 @@ function quitGame(promptName) {
 }
 
 //**********************!!!!!MAINFUNCTION: DRAW MATCHFIELD!!!!!!**********************
-async function randomAiVsRandomAi() {
+async function humanVsRandomAi() {
     newLine();
     const GAME_MODE_TEXT = "You chose: 1. Human vs Human"
     displayText(GAME_MODE_TEXT);
@@ -268,4 +268,7 @@ async function randomAiVsRandomAi() {
     } console.log("Nobody won.");
 }
 
-randomAiVsRandomAi();
+//*************EXPORT****************
+module.exports = {
+    humanVsRandomAi: humanVsRandomAi,
+}

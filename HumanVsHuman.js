@@ -1,9 +1,3 @@
-/*
-TODOs:
-tie condition (if both players didn't win) - integrated counter?
-Queck if Quit still work
-*/
-
 //*********************** REQUIRES ****************************
 const prompt = require('prompt-sync')();
 let process = require ('process');
@@ -87,7 +81,7 @@ function whosTurn() {
 //********************* FUNCTION: DISPLAY MATCHFIELD **************************
 //********************* DISPLAY MATCHFIELD VARIABLE ARRAY **************************
 const YOU_PLAY_HUMAN_VERSUS_HUMAN = "You play: Human vs Human";
-let playersTurn;
+let playersTurn = "";
 let grid = [["   ", "|", " 1 ", "|", " 2 ", "|", " 3 "],
             ["---", "+", "---", "+", "---", "+", "---"],
             [" A ", "|", " . ", "|", " . ", "|", " . "],
@@ -97,13 +91,8 @@ let grid = [["   ", "|", " 1 ", "|", " 2 ", "|", " 3 "],
             [" C ", "|", " . ", "|", " . ", "|", " . "]];
 //********************* FUNCTION: DISPLAY MATCHFIELD **************************
 function displayGRID() {
-    
-
+    playersTurn = "Player" + whosTurn() + "\'s turn"
     console.clear();
-console.log(userMovesMade); //ist Löschbar nur ein test
-console.log(countMoves); //ist Löschbar nur ein test
-console.log(whosTurn()); //ist Löschbar nur ein test
-console.log(draw()); //ist Löschbar nur ein test
     let gridFromArrToStr0 = grid[0].join("");
     let gridFromArrToStr1 = grid[1].join("");
     let gridFromArrToStr2 = grid[2].join("");
@@ -130,7 +119,7 @@ console.log(draw()); //ist Löschbar nur ein test
 let isWin = false;
 //********************* FUNCTION: DRAW **************************
 function draw() {
-    while (countMoves < 9 || isWin === true) {
+    while (countMoves === 9 && isWin === false) {
         let goodbyeLength = "                           ";
         let goodbye = "\n" +
         alignCenter(goodbyeLength) + " _____                     \n" +
@@ -139,8 +128,8 @@ function draw() {
         alignCenter(goodbyeLength) + "| |  | | '__/ _` \\ \\ /\\ / /\n" +
         alignCenter(goodbyeLength) + "| |__| | | | (_| |\\ V  V / \n" +
         alignCenter(goodbyeLength) + "|_____/|_|  \\__,_| \\_/\\_/  \n";
-        return goodbye;
-        //process.exit();
+        console.log(goodbye);
+        process.exit();
     }  
 }
 
@@ -249,10 +238,8 @@ function quitGame(promptName) {
 }
 
 //**********************!!!!!MAINFUNCTION: HUMAN VS HUMAN!!!!!!**********************
-function HumanVsHuman() {
+function humanVsHuman() {
     while (gameIsRunning) {
-        playersTurn = "Player" + whosTurn() + "\'s turn"
-
         displayGRID();                                     //shows board
         getUserInput();                                    //player 1 makes move (a1,a2,...)
         console.clear();                                   //clears console for visual clarity    
@@ -293,4 +280,8 @@ function HumanVsHuman() {
         winningCondition(PLAYER1, PLAYER2);
     }
 }
-HumanVsHuman();
+
+//*************EXPORT****************
+module.exports = {
+    humanVsHuman: humanVsHuman,
+}

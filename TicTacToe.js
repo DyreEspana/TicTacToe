@@ -1,11 +1,11 @@
 /*
 TODO:   If quit is enter quit the game! presses exit
-        
-
-DONE:   getestet ob aus getMenuOptions die Array raus kommt mit den richtigen parameter = funktioniert!
 */
-
 const prompt = require("prompt-sync")();
+const { humanVsHuman } = require("./humanVsHuman");
+const { randomAiVsRandomAi } = require("./randomAiVsRandomAi");
+const { humanVsRandomAi } = require("./humanVsRandomAi");
+const process = require ('process');
 
 //*********FUNCTION TO ALIGN CENTER IN TERMINAL***************
 function alignCenter(varToAlignCenter) {
@@ -124,13 +124,13 @@ function startGameMenu() {
                 console.clear();
                 console.log(TicTacToe);
                 if (gameModePrompt === "1") {
-                    HumanVsHuman();
+                    humanVsHuman;
                     saveGameModeInput[0] = gameModePrompt;
                 } else if (gameModePrompt === "2") {
-                    //Usable for game mode functions
+                    randomAiVsRandomAi;
                     saveGameModeInput[0] = gameModePrompt;
                 } else if (gameModePrompt === "3") {
-                    //Usable for game mode functions
+                    humanVsRandomAi;
                     saveGameModeInput[0] = gameModePrompt;
                 } else if (gameModePrompt === "4") {
                     //Usable for game mode functions
@@ -154,15 +154,5 @@ function startGameMenu() {
         }
 return saveGameModeInput;
 }
-let introParameter = startGameMenu();
-let gameMode = introParameter[0];
-let isQuitTipedIn = introParameter[1];
-console.log(gameMode);
-console.log(isQuitTipedIn);
 
-
-//*************EXPORT****************
-module.exports = {
-    startGameMenu: startGameMenu,
-    alignCenter: alignCenter,
-}
+startGameMenu();
