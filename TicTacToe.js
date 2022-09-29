@@ -3,9 +3,6 @@ TODO:   If quit is enter quit the game! presses exit
 */
 const prompt = require("prompt-sync")();
 const process = require ('process');
-const { humanVsHuman } = require("./humanVsHuman");
-const { randomAiVsRandomAi } = require("./randomAiVsRandomAi");
-const { humanVsRandomAi } = require("./humanVsRandomAi");
 
 //********************* FUNCTION: ALIGN TO CENTER *********************
 //formatting - text allign = Plese enter in let windoWidth your window sitze (character spacing)
@@ -138,19 +135,6 @@ function startGameMenu() {
             while (gameModePrompt !== "1" && gameModePrompt !== "2" && gameModePrompt !== "3" && gameModePrompt !== "4" || isQuitTipedIn === true) {
                 console.clear();
                 console.log(TicTacToe);
-                if (gameModePrompt === "1") {
-                    //humanVsHuman;
-                    //saveGameModeInput[0] = gameModePrompt;
-                } else if (gameModePrompt === "2") {
-                    randomAiVsRandomAi;
-                    //saveGameModeInput[0] = gameModePrompt;
-                } else if (gameModePrompt === "3") {
-                    humanVsRandomAi;
-                    //saveGameModeInput[0] = gameModePrompt;
-                } /*else if (gameModePrompt === "4") {
-                    //Usable for game mode functions
-                    saveGameModeInput[0] = gameModePrompt;
-                }*/ else {
                     let wrongMenuInput1 = "Sorry i dont understand your input,";
                     let wrongMenuInput2 = "just enter the number 1-4 to select the Game Mode!";
                     console.log("\n" + alignCenter(wrongMenuInput1) + wrongMenuInput1);
@@ -163,33 +147,28 @@ function startGameMenu() {
                     }
                     saveGameModeInput[0] = gameModePrompt;
                     saveGameModeInput[1] = isQuitTipedIn;
-                }
             }
         return saveGameModeInput;
         }
 return saveGameModeInput;
 }
 
+//let humanVsHuman = require("./humanVsHuman");
 let getArrOfGameMenu = startGameMenu();
 let gameMode = getArrOfGameMenu[0];
 let isGameQuit = getArrOfGameMenu[1];
-
 if (isGameQuit === true) {
     process.exit();
 }
 if (gameMode === "1") {
-    humanVsHuman();
+    let humanVsHuman = require("./humanVsHuman");
 }
 if (gameMode === "2") {
-    randomAiVsRandomAi();
+    let randomAiVsRandomAi = require("./randomAiVsRandomAi");  
 }
 if (gameMode === "3") {
-    humanVsRandomAi();
+    let humanVsRandomAi = require("./humanVsRandomAi");
+    
 } /*if (gameMode === "4") {
     //Usable for game mode functions
 }*/
-console.log(gameMode);
-console.log(isGameQuit);
-typeof(gameMode);
-typeof(humanVsHuman);
-let testPrompt = prompt("Thx");

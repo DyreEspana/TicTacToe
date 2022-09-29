@@ -281,8 +281,7 @@ function humanVsHuman() {
         }
     }
 }
-//humanVsHuman();
-
+humanVsHuman();
 //*************EXPORT****************
 module.exports = {
     humanVsHuman: humanVsHuman,

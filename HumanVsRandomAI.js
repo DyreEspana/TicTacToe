@@ -267,7 +267,7 @@ async function humanVsRandomAi() {
         winningCondition(PLAYER1, PLAYER2);
     } console.log("Nobody won.");
 }
-
+humanVsRandomAi();
 //*************EXPORT****************
 module.exports = {
     humanVsRandomAi: humanVsRandomAi,

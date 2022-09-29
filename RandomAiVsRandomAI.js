@@ -243,7 +243,7 @@ async function randomAiVsRandomAi() {
         winningCondition(PLAYER1, PLAYER2);
     } console.log("Nobody won.");
 }
-
+randomAiVsRandomAi();
 //*************EXPORT****************
 module.exports = {
     randomAiVsRandomAi: randomAiVsRandomAi,
