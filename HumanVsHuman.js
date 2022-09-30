@@ -44,6 +44,9 @@ function getUserInput() {
     let userMove = prompt(alignCenter(YOUR_MOVE) + YOUR_MOVE).toUpperCase();
     while (!CORRECT_FORMATTING.includes(userMove) || userMovesMade.includes(userMove)) {
         while (!CORRECT_FORMATTING.includes(userMove)) {
+            if (userMove === "QUIT") {
+                quitGame();
+            }
             console.clear();
             displayGRID();
             newLine();
@@ -54,6 +57,9 @@ function getUserInput() {
             userMove = prompt(alignCenter(YOUR_MOVE) + YOUR_MOVE).toUpperCase();
         }
         while (userMovesMade.includes(userMove)) {
+            if (userMove === "QUIT") {
+                quitGame();
+            }
             console.clear();
             displayGRID();
             newLine();
@@ -192,21 +198,20 @@ function winningCondition(PLAYER1, PLAYER2) {
 }
 
 //********************** FUNCTION: QUIT GAME **********************
-function quitGame(promptName) {
-    if (promptName === "QUIT") {
-        let goodbyeLength = "                                           ";
-        let goodbye = "\n" +
-            alignCenter(goodbyeLength) + "   _____                 _ _               \n" + 
-            alignCenter(goodbyeLength) + " / ____|               | | |               \n" +
-            alignCenter(goodbyeLength) + "| |  __  ___   ___   __| | |__  _   _  ___ \n" +
-            alignCenter(goodbyeLength) + "| | |_ |/ _ \ / _ \ / _` | '_ \| | | |/ _ \\n" +
-            alignCenter(goodbyeLength) + "| |__| | (_) | (_) | (_| | |_) | |_| |  __/\n" +
-            alignCenter(goodbyeLength) + " \_____|\___/ \___/ \__,_|_.__/ \__, |\___|\n" +
-            alignCenter(goodbyeLength) + "                                 __/ |     \n" +
-            alignCenter(goodbyeLength) + "                                |___/      \n" 
-        console.log(goodbye);
-        process.exit();
-    }
+function quitGame() {
+    console.clear();
+    let goodbyeLength = "                                           ";
+    let goodbye = "\n" +
+        alignCenter(goodbyeLength) + "  _____                 _ _               \n" +
+        alignCenter(goodbyeLength) + " / ____|               | | |               \n" +
+        alignCenter(goodbyeLength) + "| |  __  ___   ___   __| | |__  _   _  ___ \n" +
+        alignCenter(goodbyeLength) + "| | |_ |/ _ \\ / _ \\ / _` | '_ \\| | | |/ _ \\\n" +
+        alignCenter(goodbyeLength) + "| |__| | (_) | (_) | (_| | |_) | |_| |  __/\n" +
+        alignCenter(goodbyeLength) + " \\_____|\\___/ \\___/ \\__,_|_.__/ \\__, |\\___|\n" +
+        alignCenter(goodbyeLength) + "                                 __/ |     \n" +
+        alignCenter(goodbyeLength) + "                                |___/      \n";
+    console.log(goodbye);
+    process.exit();
 }
 
 //*********************** DRAW MATCHFIELD ****************************

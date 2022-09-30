@@ -44,45 +44,57 @@ function newLine() {
 //********************* GET USER INPUT **************************
 //User gives moving input (e.g:B2,C1,...)& input will check & input is logged into Array & add 1 to counterMoves
 //********************* GET USER INPUT VARIABLES **************************
-const VALID_COORDINATES = ["A1","A2","A3","B1","B2","B3","C1","C2","C3"]
+const CORRECT_FORMATTING = ["A1","A2","A3","B1","B2","B3","C1","C2","C3"]
 const THIS_FIELD_IS_ALREADY_OCCUPIED = "This field is already occupied!";
 const SORRY_I_DONT_UNDERSTAND_YOUR_INPUT = "Sorry i dont undertand your input!";
 const PLEASE_ENTER_A_MOVE = "Please enter a move by typing a possible position (Like: a1).";
-//const YOUR_MOVE = "Your move: ";
-let randomAiMovesMade = [];
+const YOUR_MOVE = "Your move: ";
+let movesMade = [];
 let countMoves = 0;
 //********************* FUNCTION: GET USER INPUT **************************
 function getUserInput() {
-/*newLine();
+    newLine();
     displayText(PLEASE_ENTER_A_MOVE);
     newLine();
-    //let randomAiMove = [ 'A1', 'A2', 'A3', 'B1', 'B2', 'B3', 'C1', 'C2', 'C3']*/
-    let randomBeatableAiCoordinates = VALID_COORDINATES[Math.floor(Math.random() * VALID_COORDINATES.length)];
-   console.log(randomBeatableAiCoordinates) 
-   
-
-    /*while (!VALID_COORDINATES.includes(randomAiMove) || randomAiMovesMade.includes(randomAiMove)) {
-        while (!VALID_COORDINATES.includes(randomAiMove)) {
+    let userMove = prompt(alignCenter(YOUR_MOVE) + YOUR_MOVE).toUpperCase();
+    while (!CORRECT_FORMATTING.includes(userMove) || movesMade.includes(userMove)) {
+        while (!CORRECT_FORMATTING.includes(userMove)) {
+            if (userMove === "QUIT") {
+                quitGame();
+            } 
             newLine();
             displayText(SORRY_I_DONT_UNDERSTAND_YOUR_INPUT);
             newLine();
             displayText(PLEASE_ENTER_A_MOVE);
             newLine();
-            randomAiMove = randomBeatableAiCoordinates.toUpperCase();;
-        }*/
-        while (randomAiMovesMade.includes(randomBeatableAiCoordinates)) {
-            /*newLine();
+            userMove = prompt(alignCenter(YOUR_MOVE) + YOUR_MOVE).toUpperCase();
+        }
+        while (movesMade.includes(userMove)) {
+            if (userMove === "QUIT") {
+                quitGame();
+            }
+            newLine();
             displayText(THIS_FIELD_IS_ALREADY_OCCUPIED);
             newLine();
             displayText(PLEASE_ENTER_A_MOVE);
             newLine();
-            //randomAiMove = 
-            */
-            return randomBeatableAiCoordinates; //User gives moving input (e.g:B2,C1,...)
+            userMove = prompt(alignCenter(YOUR_MOVE) + YOUR_MOVE).toUpperCase(); //User gives moving input (e.g:B2,C1,...)
         }
-    
-    randomAiMovesMade.push(randomBeatableAiCoordinates); //Input is logged into Array
+    }
+    movesMade.push(userMove); //Input is logged into Array
     countMoves++;
+}
+
+//********************* FUNCTION: GET AI INPUT **************************
+
+
+function getAiInput() {
+let randomBeatableAiCoordinates = CORRECT_FORMATTING[Math.floor(Math.random() * CORRECT_FORMATTING.length)];
+while (movesMade.includes(randomBeatableAiCoordinates)) {
+    randomBeatableAiCoordinates;
+    return randomBeatableAiCoordinates;}
+movesMade.push(randomBeatableAiCoordinates); //AI input is logged into Array
+countMoves++;
 }
 
 //********************* FUNCTION: DISPLAY MATCHFIELD **************************
@@ -117,9 +129,9 @@ function displayGRID() {
 //********************* WINNING CONDITIONS **************************
 //********************* WINNING CONDITIONS VARIABLE **************************
 const PLAYER1 = " X ";
-const PLAYER2 = " O ";
+const AI = " O ";
 //********************* FUNCTION: WINNING CONDITIONS **************************
-function winningCondition(PLAYER1, PLAYER2) {
+function winningCondition(PLAYER1, AI) {
 //Winning conditions for Player 1
     if (grid[2][2] === PLAYER1 && grid[2][4] === PLAYER1 && grid[2][6] === PLAYER1 ||
         grid[4][2] === PLAYER1 && grid[4][4] === PLAYER1 && grid[4][6] === PLAYER1 ||
@@ -142,14 +154,14 @@ function winningCondition(PLAYER1, PLAYER2) {
         console.log(xWin);
         process.exit(gameIsRunning); //breaks from function if player won
     }
-    if (grid[2][2] === PLAYER2 && grid[2][4] === PLAYER2 && grid[2][6] === PLAYER2 ||
-        grid[4][2] === PLAYER2 && grid[4][4] === PLAYER2 && grid[4][6] === PLAYER2 ||
-        grid[6][2] === PLAYER2 && grid[6][4] === PLAYER2 && grid[6][6] === PLAYER2 ||
-        grid[2][2] === PLAYER2 && grid[4][2] === PLAYER2 && grid[6][2] === PLAYER2 ||
-        grid[2][4] === PLAYER2 && grid[4][4] === PLAYER2 && grid[6][4] === PLAYER2 ||
-        grid[2][6] === PLAYER2 && grid[4][6] === PLAYER2 && grid[6][6] === PLAYER2 ||
-        grid[2][2] === PLAYER2 && grid[4][4] === PLAYER2 && grid[6][6] === PLAYER2 ||
-        grid[2][6] === PLAYER2 && grid[4][4] === PLAYER2 && grid[6][2] === PLAYER2) {
+    if (grid[2][2] === AI && grid[2][4] === AI && grid[2][6] === AI ||
+        grid[4][2] === AI && grid[4][4] === AI && grid[4][6] === AI ||
+        grid[6][2] === AI && grid[6][4] === AI && grid[6][6] === AI ||
+        grid[2][2] === AI && grid[4][2] === AI && grid[6][2] === AI ||
+        grid[2][4] === AI && grid[4][4] === AI && grid[6][4] === AI ||
+        grid[2][6] === AI && grid[4][6] === AI && grid[6][6] === AI ||
+        grid[2][2] === AI && grid[4][4] === AI && grid[6][6] === AI ||
+        grid[2][6] === AI && grid[4][4] === AI && grid[6][2] === AI) {
         let oWinLength = "                                                                 ";
         let oWin = "\n" +
             alignCenter(oWinLength) + " _____  _                          ____   __          __         \n" +
@@ -165,12 +177,28 @@ function winningCondition(PLAYER1, PLAYER2) {
     }
 }
 
+//********************** FUNCTION: QUIT GAME **********************
+function quitGame() {
+    console.clear();
+    let goodbyeLength = "                                           ";
+    let goodbye = "\n" +
+        alignCenter(goodbyeLength) + "  _____                 _ _               \n" +
+        alignCenter(goodbyeLength) + " / ____|               | | |               \n" +
+        alignCenter(goodbyeLength) + "| |  __  ___   ___   __| | |__  _   _  ___ \n" +
+        alignCenter(goodbyeLength) + "| | |_ |/ _ \\ / _ \\ / _` | '_ \\| | | |/ _ \\\n" +
+        alignCenter(goodbyeLength) + "| |__| | (_) | (_) | (_| | |_) | |_| |  __/\n" +
+        alignCenter(goodbyeLength) + " \\_____|\\___/ \\___/ \\__,_|_.__/ \\__, |\\___|\n" +
+        alignCenter(goodbyeLength) + "                                 __/ |     \n" +
+        alignCenter(goodbyeLength) + "                                |___/      \n";
+    console.log(goodbye);
+    process.exit();
+}
+
 //*********************** DRAW MATCHFIELD ****************************
 //*********************** DRAW MATCHFIELD VARIABLE****************************
 const WRONG_ENTRY = "Position already taken or non existent.";
 //********************** FUNCTION: DRAW MATCHFIELD **********************
 function drawMatchfield(input, Player) {
-    quitGame
     if (input === "A1") {//an Stelle A1 wird mit splice ein X eingesetzt
         grid[2].splice(2, 1, Player);   //neues board wird angezeigt
         displayGRID();
@@ -204,69 +232,67 @@ function drawMatchfield(input, Player) {
     }
 }
 
-//********************** FUNCTION: QUIT GAME **********************
-function quitGame(promptName) {
-    if (promptName === "QUIT") {
-        console.log(":(");
-        console.log("Thanks for playing.");
-        process.exit();
-    }
-}
-
 //**********************!!!!!MAINFUNCTION: DRAW MATCHFIELD!!!!!!**********************
 async function humanVsRandomAi() {
     newLine();
     const GAME_MODE_TEXT = "You chose: 1. Human vs Human"
     displayText(GAME_MODE_TEXT);
     while (gameIsRunning) {
-        displayGRID();                                     //shows board
+        displayGRID();
+        //User move//                                      //shows board
         getUserInput();                                    //player 1 makes move (a1,a2,...)
         console.clear();                                   //clears console for visual clarity    
-        drawMatchfield(randomAiMovesMade[0], PLAYER1); 
-        await new Promise(resolve => setTimeout(resolve, 400));         //places user move in array & displays updated board         
-        getUserInput();                                    //player 2 makes move (a1,a2,...)
+        drawMatchfield(movesMade[0], PLAYER1);             //places user move in array & displays updated board
+        //AI move//
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        getAiInput();                                      //AI makes move (a1,a2,...)                                               
         console.clear();
-        drawMatchfield(randomAiMovesMade[1], PLAYER2);
-        await new Promise(resolve => setTimeout(resolve, 400));
+        drawMatchfield(movesMade[1], AI);                  //places AI move in array & displays updated board
+        //User move//
         getUserInput();
         console.clear();
-        drawMatchfield(randomAiMovesMade[2], PLAYER1);
-        await new Promise(resolve => setTimeout(resolve, 400));
+        drawMatchfield(movesMade[2], PLAYER1);
+        //AI move//
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        getAiInput();
+        console.clear();
+        drawMatchfield(movesMade[3], AI);
+        //User move//
         getUserInput();
         console.clear();
-        drawMatchfield(randomAiMovesMade[3], PLAYER2);
-        await new Promise(resolve => setTimeout(resolve, 400));
+        drawMatchfield(movesMade[4], PLAYER1);
+        winningCondition(PLAYER1, AI);                      //checks for winning conditions - placed here because first time a win would be possible            
+        //AI move//
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        getAiInput();
+        console.clear();
+        drawMatchfield(movesMade[5], AI);
+        winningCondition(PLAYER1, AI);
+        //User move // 
         getUserInput();
         console.clear();
-        drawMatchfield(randomAiMovesMade[4], PLAYER1);
-        winningCondition(PLAYER1, PLAYER2); 
-        await new Promise(resolve => setTimeout(resolve, 400));                 //checks for winning conditions - placed here because first time a win would be possible            
+        drawMatchfield(movesMade[6], PLAYER1);
+        winningCondition(PLAYER1, AI);
+        //AI move //
+        await new Promise(resolve => setTimeout(resolve, 1000)); 
+        getAiInput();
+        console.clear();
+        drawMatchfield(movesMade[7], AI);
+        winningCondition(PLAYER1, AI);
+        //User move // 
         getUserInput();
         console.clear();
-        drawMatchfield(randomAiMovesMade[5], PLAYER2);
-        winningCondition(PLAYER1, PLAYER2);
-        await new Promise(resolve => setTimeout(resolve, 400));
-        getUserInput();
+        drawMatchfield(movesMade[8], PLAYER1);
+        winningCondition(PLAYER1, AI);
+        //AI move //
         console.clear();
-        drawMatchfield(randomAiMovesMade[6], PLAYER1);
-        winningCondition(PLAYER1, PLAYER2);
-        await new Promise(resolve => setTimeout(resolve, 400));
-        getUserInput();
-        console.clear();
-        drawMatchfield(randomAiMovesMade[7], PLAYER2);
-        winningCondition(PLAYER1, PLAYER2);
-        await new Promise(resolve => setTimeout(resolve, 400));
-        getUserInput();
-        console.clear();
-        drawMatchfield(randomAiMovesMade[8], PLAYER1);
-        winningCondition(PLAYER1, PLAYER2);
-        await new Promise(resolve => setTimeout(resolve, 400));
-        getUserInput();
-        console.clear();
-        drawMatchfield(randomAiMovesMade[9], PLAYER2);
-        winningCondition(PLAYER1, PLAYER2);
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        getAiInput();
+        drawMatchfield(movesMade[9], AI);
+        winningCondition(PLAYER1, AI);
     } console.log("Nobody won.");
 }
+
 humanVsRandomAi();
 //*************EXPORT****************
 module.exports = {
