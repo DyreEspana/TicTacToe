@@ -15,6 +15,7 @@ function alignCenter(varToAlignCenter) {
     }
     return arraySpaceAlineCenter.join("");
 }
+//********************* FUNCTIONS: FORMATTING TEXT *********************
 function displayText(text) {
     console.log(alignCenter(text) + text);
 }
@@ -22,8 +23,8 @@ function displayText(text) {
 function newLine() {
     console.log("\n");
 }
-
-let ticLength = "                                                             ";
+//********************* TIC TAC TOE ASCII *********************
+let ticLength =                      "                                                           ";
         let TicTacToe = "\n" +
             alignCenter(ticLength) + " _______ _          _______             _______            \n" +
             alignCenter(ticLength) + "|__   __(_)        |__   __|           |__   __|           \n" +

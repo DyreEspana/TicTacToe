@@ -17,10 +17,11 @@ function alignCenter(varToAlignCenter) {
     }
     return arraySpaceAlineCenter.join("");
 }
+//********************* FUNCTIONS: FORMATTING TEXT *********************
 function displayText(text) {
     console.log(alignCenter(text) + text);
 }
-//New line
+//new line / pragraph
 function newLine() {
     console.log("\n");
 }
@@ -75,7 +76,7 @@ function whosTurn() {
     if (countMoves % 2 === 0) {
         return PLAYER1;
     } else {
-        return PLAYER2
+        return PLAYER2;
     }
 }
 //********************* FUNCTION: DISPLAY MATCHFIELD **************************
@@ -91,6 +92,7 @@ let grid = [["   ", "|", " 1 ", "|", " 2 ", "|", " 3 "],
             [" C ", "|", " . ", "|", " . ", "|", " . "]];
 //********************* FUNCTION: DISPLAY MATCHFIELD **************************
 function displayGRID() {
+    console.clear();
     playersTurn = "Player" + whosTurn() + "\'s turn"
     let gridFromArrToStr0 = grid[0].join("");
     let gridFromArrToStr1 = grid[1].join("");
@@ -99,7 +101,6 @@ function displayGRID() {
     let gridFromArrToStr4 = grid[4].join("");
     let gridFromArrToStr5 = grid[5].join("");
     let gridFromArrToStr6 = grid[6].join("");
-    console.clear();
     newLine();
     displayText(YOU_PLAY_HUMAN_VERSUS_HUMAN);
     newLine();
@@ -119,16 +120,19 @@ function displayGRID() {
 let isWin = false;
 //********************* FUNCTION: DRAW **************************
 function draw() {
-        let goodbyeLength = "                           ";
-        let goodbye = "\n" +
+    console.clear();
+    drawMatchfield();
+    newLine();
+    let goodbyeLength = "                           ";
+    let goodbye = "\n" +
         alignCenter(goodbyeLength) + " _____                     \n" +
         alignCenter(goodbyeLength) + "|  __ \                    \n" +
         alignCenter(goodbyeLength) + "| |  | |_ __ __ ___      __\n" +
         alignCenter(goodbyeLength) + "| |  | | '__/ _` \\ \\ /\\ / /\n" +
         alignCenter(goodbyeLength) + "| |__| | | | (_| |\\ V  V / \n" +
         alignCenter(goodbyeLength) + "|_____/|_|  \\__,_| \\_/\\_/  \n";
-        console.log(goodbye);
-        //process.exit();
+    console.log(goodbye);
+    process.exit();
 }
 
 //********************* WINNING CONDITIONS **************************
@@ -143,16 +147,19 @@ function winningCondition(PLAYER1, PLAYER2) {
         grid[2][6] === PLAYER1 && grid[4][6] === PLAYER1 && grid[6][6] === PLAYER1 ||
         grid[2][2] === PLAYER1 && grid[4][4] === PLAYER1 && grid[6][6] === PLAYER1 ||
         grid[2][6] === PLAYER1 && grid[4][4] === PLAYER1 && grid[6][2] === PLAYER1) {
+        console.clear();
+        drawMatchfield();
+        newLine();
         let xWinLength = "                                                                ";
         let xWin = "\n" +
-            alignCenter(xWinLength) + " _____  _                        __   __ __          __         \n" +
-            alignCenter(xWinLength) + "|  __ \\| |                       \\ \\ / / \\ \\        / /         \n" +
-            alignCenter(xWinLength) + "| |__) | | __ _ _   _  ___ _ __   \\ V /   \\ \\  /\\  / /__  _ __  \n" +
-            alignCenter(xWinLength) + "|  ___/| |/ _` | | | |/ _ \\ '__|   > <     \\ \\/  \\/ / _ \\| '_ \\ \n" +
-            alignCenter(xWinLength) + "| |    | | (_| | |_| |  __/ |     / . \\     \\  /\\  / (_) | | | |\n" +
-            alignCenter(xWinLength) + "|_|    |_|\\__,_|\\__, |\\___|_|    /_/ \\_\\     \\/  \\/ \\___/|_| |_|\n" +
-            alignCenter(xWinLength) + "                 __/ |                                          \n" +
-            alignCenter(xWinLength) + "                |___/                                           \n";
+        alignCenter(xWinLength) + " _____  _                        __   __ __          __         \n" +
+        alignCenter(xWinLength) + "|  __ \\| |                       \\ \\ / / \\ \\        / /         \n" +
+        alignCenter(xWinLength) + "| |__) | | __ _ _   _  ___ _ __   \\ V /   \\ \\  /\\  / /__  _ __  \n" +
+        alignCenter(xWinLength) + "|  ___/| |/ _` | | | |/ _ \\ '__|   > <     \\ \\/  \\/ / _ \\| '_ \\ \n" +
+        alignCenter(xWinLength) + "| |    | | (_| | |_| |  __/ |     / . \\     \\  /\\  / (_) | | | |\n" +
+        alignCenter(xWinLength) + "|_|    |_|\\__,_|\\__, |\\___|_|    /_/ \\_\\     \\/  \\/ \\___/|_| |_|\n" +
+        alignCenter(xWinLength) + "                 __/ |                                          \n" +
+        alignCenter(xWinLength) + "                |___/                                           \n";
         console.log(xWin);
         isWin = true;
         process.exit(gameIsRunning); //breaks from function if player won
@@ -165,6 +172,9 @@ function winningCondition(PLAYER1, PLAYER2) {
         grid[2][6] === PLAYER2 && grid[4][6] === PLAYER2 && grid[6][6] === PLAYER2 ||
         grid[2][2] === PLAYER2 && grid[4][4] === PLAYER2 && grid[6][6] === PLAYER2 ||
         grid[2][6] === PLAYER2 && grid[4][4] === PLAYER2 && grid[6][2] === PLAYER2) {
+        console.clear();
+        drawMatchfield();
+        newLine();
         let oWinLength = "                                                                 ";
         let oWin = "\n" +
         alignCenter(oWinLength) + " _____  _                          ____   __          __         \n" +
@@ -200,8 +210,6 @@ function quitGame(promptName) {
 }
 
 //*********************** DRAW MATCHFIELD ****************************
-//*********************** DRAW MATCHFIELD VARIABLE****************************
-//const WRONG_ENTRY = "Position already taken or non existent."; Can be deledet!
 //********************** FUNCTION: DRAW MATCHFIELD **********************
 function drawMatchfield(input, Player) {
     quitGame
