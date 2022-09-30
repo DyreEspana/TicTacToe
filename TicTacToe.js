@@ -33,6 +33,22 @@ let ticLength =                      "                                          
             alignCenter(ticLength) + "   | |  | | | (__     | || (_| || (__     | || (_) ||  __/ \n" +
             alignCenter(ticLength) + "   |_|  |_|  \\___|    |_| \\__,_| \\___|    |_| \\___/  \\___| \n";
 
+//********************** FUNCTION: QUIT GAME **********************
+function quitGame() {
+        let goodbyeLength = "                                           ";
+        let goodbye = "\n" +
+            alignCenter(goodbyeLength) + "   _____                 _ _               \n" + 
+            alignCenter(goodbyeLength) + " / ____|               | | |               \n" +
+            alignCenter(goodbyeLength) + "| |  __  ___   ___   __| | |__  _   _  ___ \n" +
+            alignCenter(goodbyeLength) + "| | |_ |/ _ \ / _ \ / _` | '_ \| | | |/ _ \\n" +
+            alignCenter(goodbyeLength) + "| |__| | (_) | (_) | (_| | |_) | |_| |  __/\n" +
+            alignCenter(goodbyeLength) + " \_____|\___/ \___/ \__,_|_.__/ \__, |\___|\n" +
+            alignCenter(goodbyeLength) + "                                 __/ |     \n" +
+            alignCenter(goodbyeLength) + "                                |___/      \n" 
+        console.log(goodbye);
+        process.exit();
+    }
+
 //*************INTRO START GAME OR READ RULES****************
 //Return in an Array => what game mode we have and quit entered.
 //Exaple array[1-4, quit=true]
@@ -80,8 +96,9 @@ function startGameMenu() {
                 getMenuOption();
             }
     }
-    if (startOrRulesPrompt === "quit") {
-        isQuitTipedIn = true;
+    if (startOrRulesPrompt === "QUIT") {
+        process.exit();
+        quitGame();
     }
 
         //*************GAME RULES :TIC TAC TOE****************
@@ -101,8 +118,9 @@ function startGameMenu() {
                 console.log("\n\n");
                 let continueGame = "Please press enter to continue to game! ";
                 continueToGame = prompt(alignCenter(continueGame) + continueGame).toLowerCase();
-                if (continueToGame === "quit") {
-                    isQuitTipedIn = true;
+                if (continueToGame === "QUIT") {
+                    process.exit();
+                    quitGame();
                 }
             return isQuitTipedIn;
         }
@@ -128,8 +146,9 @@ function startGameMenu() {
             displayMenu();
             console.log("\n\n");
             gameModePrompt = prompt(alignCenter(yourChoice) + yourChoice).toLowerCase();
-            if (gameModePrompt === "quit") {
-                isQuitTipedIn = true;
+            if (gameModePrompt === "QUIT") {
+                process.exit();
+                quitGame();
             }
             saveGameModeInput[0] = gameModePrompt;
             saveGameModeInput[1] = isQuitTipedIn;
@@ -143,7 +162,8 @@ function startGameMenu() {
                     displayMenu();
                     console.log("\n");
                     gameModePrompt = prompt(alignCenter(yourChoice) + yourChoice).toLowerCase();
-                    if (gameModePrompt === "quit") {
+                if (gameModePrompt === "QUIT") {
+                        process.exit();
                         isQuitTipedIn = true;
                     }
                     saveGameModeInput[0] = gameModePrompt;
