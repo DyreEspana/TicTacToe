@@ -1,112 +1,27 @@
-/*
-TODO:   If quit is enter quit the game! presses exit
-*/
 const prompt = require("prompt-sync")();
-const process = require ('process');
+const process = require('process');
+const { maybeQuitGame } = require("./quitGame");
+const { getGameModeInput } = require("./menu");
+const { humanVsHuman } = require("./HumanVsHuman");
+const { TIC_TAC_TOE, YOUR_CHOICE_TEXT } = require("./formatText");
 
-//********************* FUNCTION: ALIGN TO CENTER *********************
-//formatting - text allign = Plese enter in let windoWidth your window sitze (character spacing)
-function alignCenter(varToAlignCenter) {
-    let windoWidth = 160;
-    let startPoint = (windoWidth - varToAlignCenter.length) / 2;
-    let arraySpaceAlineCenter = [];
-    for (let i = 1; i < startPoint; i++){
-        arraySpaceAlineCenter.push(" ");
-    }
-    return arraySpaceAlineCenter.join("");
-}
-//********************* FUNCTIONS: FORMATTING TEXT *********************
-function displayText(text) {
-    console.log(alignCenter(text) + text);
-}
-//New line
-function newLine() {
-    console.log("\n");
-}
-//********************* TIC TAC TOE ASCII *********************
-let ticLength =              "                                                           ";
-let TicTacToe = "\n" +
-    alignCenter(ticLength) + " _______ _          _______             _______            \n" +
-    alignCenter(ticLength) + "|__   __(_)        |__   __|           |__   __|           \n" +
-    alignCenter(ticLength) + "   | |   _    ___     | |  __ _   ___     | |  ___    ___  \n" +
-    alignCenter(ticLength) + "   | |  | |  / __|    | | / _` | / __|    | | / _ \\  / _ \\ \n" +
-    alignCenter(ticLength) + "   | |  | | | (__     | || (_| || (__     | || (_) ||  __/ \n" +
-    alignCenter(ticLength) + "   |_|  |_|  \\___|    |_| \\__,_| \\___|    |_| \\___/  \\___| \n";
+const {
+    alignCenter,
+    displayText,
+    newLine,
+} = require("./formatText");
 
-//********************** FUNCTION: QUIT GAME **********************
-function quitGame() {
+const OPTION_START_GAME = "1";
+const OPTION_SHOW_RULES = "2";
+
+function displayIntro() {
+    const buttonStart = "Please enter 1 to start the game.";
+    const buttonRules = "Please enter 2 to see the rules.";
+    const quit = "You can quit the game by enter quit.";
+
     console.clear();
-    let goodbyeLength =              "                                            ";
-    let goodbye = "\n" +
-        alignCenter(goodbyeLength) + "  _____                 _ _               \n" +
-        alignCenter(goodbyeLength) + " / ____|               | | |               \n" +
-        alignCenter(goodbyeLength) + "| |  __  ___   ___   __| | |__  _   _  ___ \n" +
-        alignCenter(goodbyeLength) + "| | |_ |/ _ \\ / _ \\ / _` | '_ \\| | | |/ _ \\\n" +
-        alignCenter(goodbyeLength) + "| |__| | (_) | (_) | (_| | |_) | |_| |  __/\n" +
-        alignCenter(goodbyeLength) + " \\_____|\\___/ \\___/ \\__,_|_.__/ \\__, |\\___|\n" +
-        alignCenter(goodbyeLength) + "                                 __/ |     \n" +
-        alignCenter(goodbyeLength) + "                                |___/      \n";
-    console.log(goodbye);
-    process.exit();
-}
+    console.log(TIC_TAC_TOE);
 
-//*************VARIABLE FOR GETMENUOPTION & START GAME MENU****************
-let yourChoice = "Your choice: "; //Used more times
-//*************GAME START: DISPLAY GAME MODE MENU****************
-function displayMenu() {
-    let inputGameMode1 = "1 for Human vs Human";
-    console.log("\n" + alignCenter(inputGameMode1) + inputGameMode1);
-    let inputGameMode2 = "2 for Random AI vs Random AI";
-    console.log("\n" + alignCenter(inputGameMode2) + inputGameMode2);
-    let inputGameMode3 = "3 for Human vs Random AI";
-    console.log("\n" + alignCenter(inputGameMode3) + inputGameMode3);
-    let inputGameMode4 = "4 for Human vs Unbeatable AI";
-    console.log("\n" + alignCenter(inputGameMode4) + inputGameMode4);
-}
-//*************GAME START: SELECT GAME MODE****************
-function getMenuOption() {
-    gameModePrompt = "";
-    console.clear();
-    console.log(TicTacToe);
-    let inputGameMode0 = "Please enter your Game Mode:";
-    console.log("\n" + alignCenter(inputGameMode0) + inputGameMode0);
-    displayMenu();
-    console.log("\n\n");
-    gameModePrompt = prompt(alignCenter(yourChoice) + yourChoice).toLowerCase();
-    if (gameModePrompt === "QUIT") {
-        quitGame();
-    }
-    while (gameModePrompt !== "1" && gameModePrompt !== "2" && gameModePrompt !== "3" && gameModePrompt !== "4") {
-        if (gameModePrompt === "QUIT") {
-            quitGame();
-        }
-        console.clear();
-        console.log(TicTacToe);
-        let wrongMenuInput1 = "Sorry i dont understand your input,";
-        let wrongMenuInput2 = "just enter the number 1-4 to select the Game Mode!";
-        console.log("\n" + alignCenter(wrongMenuInput1) + wrongMenuInput1);
-        console.log(alignCenter(wrongMenuInput2) + wrongMenuInput2);
-        displayMenu();
-        console.log("\n");
-        gameModePrompt = prompt(alignCenter(yourChoice) + yourChoice).toLowerCase();
-    }
-    return gameModePrompt;
-}
-let gameModePrompt = ""; //Its possible to export => is saved in saveGameModeInput
-
-//*************INTRO START GAME OR READ RULES****************
-//Return in an Array => what game mode we have and quit entered.
-//Exaple array[1-4, quit=true]
-function startGameMenu() {
-    let gameModePrompt = ""; //Its possible to export => is saved in saveGameModeInput
-    let startOrRulesPrompt = "";
-    let continueToGame = "";
-    saveGameModeInput = [];
-    console.clear();
-    console.log(TicTacToe);
-    let buttonStart = "Please enter 1 to start the game.";
-    let buttonRules = "Please enter 2 to see the rules.";
-    let quit = "You can quit the game by enter quit.";
     newLine();
     displayText(buttonStart);
     newLine();
@@ -115,39 +30,51 @@ function startGameMenu() {
     newLine();
     displayText(quit);
     newLine();
-    startOrRulesPrompt = prompt(alignCenter(yourChoice) + yourChoice).toLowerCase();
-    while (startOrRulesPrompt !== "1" && startOrRulesPrompt !== "2") {
-        if (startOrRulesPrompt === "QUIT") {
-            quitGame();
-        }
+}
+
+//*************INTRO START GAME OR READ RULES****************
+//Return in an Array => what game mode we have and quit entered.
+//Exaple array[1-4, quit=true]
+function startGameMenu() {
+    let continueToGame = "";
+
+    displayIntro();
+
+    displayText(YOUR_CHOICE_TEXT);
+    let startOrRulesInput = prompt().toLowerCase();
+
+    while (startOrRulesInput !== "1" && startOrRulesInput !== "2") {
+        maybeQuitGame(startOrRulesInput);
+
         console.clear();
-        console.log(TicTacToe);
+        console.log(TIC_TAC_TOE);
+
         let wrongStartInput = "Please enter just 1 for Start Game";
         let wrongRulesInput = "or enter 2 to get the Rules of the Game";
+
         newLine();
         displayText(wrongStartInput);
         newLine();
         displayText(wrongRulesInput);
         newLine();
         newLine();
-        startOrRulesPrompt = prompt(alignCenter(yourChoice) + yourChoice).toLowerCase();
+
+        startOrRulesInput = prompt(alignCenter(YOUR_CHOICE_TEXT) + YOUR_CHOICE_TEXT).toLowerCase();
     }
-    if (startOrRulesPrompt === "QUIT") {
-        quitGame();
-    }
-    if (startOrRulesPrompt === "1") {
-        gameModePrompt = getMenuOption();
-    }
-    if (startOrRulesPrompt === "2") {
-        gameplayRules();
-        getMenuOption();
-        gameModePrompt = getMenuOption();
+
+    maybeQuitGame(startOrRulesInput);
+
+    if (startOrRulesInput === OPTION_START_GAME) {
+        return getGameModeInput();
+    } else if (startOrRulesInput === OPTION_SHOW_RULES) {
+        displayGameplayRules();
+        return getGameModeInput();
     }
 
     //*************GAME RULES :TIC TAC TOE****************
-    function gameplayRules() {
+    function displayGameplayRules() {
         console.clear();
-        console.log(TicTacToe);
+        console.log(TIC_TAC_TOE);
         let ruleTitle = "GAME RULES";
         console.log("\n" + alignCenter(ruleTitle) + ruleTitle);
         let ruleOne = "* The game is played on a grid that's 3 squares by 3 squares.";
@@ -161,23 +88,18 @@ function startGameMenu() {
         console.log("\n\n");
         let continueGame = "Please press enter to continue to game! ";
         continueToGame = prompt(alignCenter(continueGame) + continueGame).toLowerCase();
-        if (continueToGame === "QUIT") {
-            quitGame();
-        }
+        maybeQuitGame(continueToGame);
     }
-    return gameModePrompt;
 }
 
 //let humanVsHuman = require("./humanVsHuman");
 let gameMode = startGameMenu();
 if (gameMode === "1") {
-    let humanVsHuman = require("./humanVsHuman");
-}
-if (gameMode === "2") {
-    let randomAiVsRandomAi = require("./randomAiVsRandomAi");  
-}
-if (gameMode === "3") {
-    let humanVsRandomAi = require("./humanVsRandomAi");
-} /*if (gameMode === "4") {
+    humanVsHuman();
+} else if (gameMode === "2") {
+    require("./RandomAiVsRandomAI");  
+} else if (gameMode === "3") {
+    require("./HumanVsRandomAI");
+} /*else if (gameMode === "4") {
     //Usable for game mode functions
 }*/
